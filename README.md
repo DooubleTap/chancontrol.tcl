@@ -1,46 +1,9 @@
 <html>
 <title>chancontrol.tcl help file - version 1.2 - Last update: 6/16/2016</title>
 <head>
-<style>
-body {
-    background-color: lightgray;
-}
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 5px;
-    text-align: left;
-}
-table#t01 {
-    width: 50%;
-    background-color: #00FFFF;
-}
-table#t02 {
-    width: 50%;
-    background-color: #f1f1c1;
-}
-table#faq {
-    width: 50%;
-    background-color: #f1f1c1;
-}
-h2 {
-    color: red;
-    margin-left: 20px;
-}
-h3 {
-    color: navy;
-    margin-left: 20px;
-}
-h4 {
-    color: slategray;
-    margin-left: 4px;
-}
 </style>
 </head>
 <body text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
-<table width="75%" border="0" cellspacing="0" cellpadding="0" align="center"><tr><td>
 <br>
 <h1 align=center>chancontrol.tcl v1.2</h1>
 <br>
@@ -301,7 +264,7 @@ chancontrol.tcl is provided 'as is' and without warranty of any kind.
 <hr align="CENTER" width="50%">
 <center><font size="-1">&copy;2016 by Sebastien@UnderNET, 6/16/2016. <A href="#contact">CONTACT</A></font></center>
 <hr align="CENTER" width="80%">
-</td></tr></table>
+</td></tr>
 </body>
 </html>
 </b>

@@ -1,11 +1,5 @@
 # chancontrol.tcl v2.2
-# Script available at: http://tinyurl.com/chancontrol
-# Read chancontrol.html for help. Also, host it so people have access to it.(optional)
-#
-# Setting for chancontrol.html to be added
-
 ##Commands
-
 bind pub o .invite pub_do_invite
 bind pub o .op pub_do_op
 bind pub o .deop pub_do_deop

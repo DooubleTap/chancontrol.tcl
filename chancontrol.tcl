@@ -1,45 +1,79 @@
-# chancontrol.tcl v4.0.1
-# Description;
-# This script is essential for channel management eggdrops. 
-# It includes the basic commands like !op !deop !voice !devoice !topic !rehash !adduser
-# Simply wget the file into /eggdrop/scripts/ 
-# Add: "source scripts/chancontrol.tcl" at the bottom of your eggdrop's config file.
-# .rehash in DCC or Telnet and type !bot in your channel to get the help file via /notice
-# Any bugs or edits can be pushed via github
-# Essential Credits: 
-# GoGers (Anto) on Dal.Net This script is based on his pubcommand.tcl v3.0 
-# jack3 on freenode and undernet for his amazing patience and teaching skills. 
-# The people on #eggdrop on freenode and undernet too, for their time and free weed. 
+# chancontrol.tcl v2.2
+# Script available at: http://tinyurl.com/chancontrol
+# Read chancontrol.html for help. Also, host it so people have access to it.(optional)
+#
+# Setting for chancontrol.html to be added
 
 ##Commands
 
-bind pub o !invite pub_do_invite
-bind pub o !op pub_do_op
-bind pub o !deop pub_do_deop
-bind pub o !voice pub_do_voice
-bind pub o !devoice pub_do_devoice
-bind pub o !topic pub_do_topic
-bind pub o !perm pub_do_perm
-bind pub o !kick pub_do_kick
-bind pub o !unban pub_do_unban
-bind pub o !unperm pub_do_unperm
-bind pub o !bans pub_do_bans
-bind pub m !mode pub_do_mode
-bind pub m !away pub_do_away
-bind pub m !back pub_do_back
-bind pub o !bot pub_do_bot
-bind pub m !rehash pub_do_rehash
-bind pub m !restart pub_do_restart
-bind pub m !jump pub_do_jump
-bind pub m !save pub_do_save
-bind pub m !ban ban:pub
-bind pub m !kban kban:pub
-bind pub m !chattr chattr:pub
-bind pub m !act pub:act
-bind pub m !say pub:say
-bind pub m !global pub:global
-bind pub m !access pub_access
-bind pub m !info pub_info
+bind pub o .invite pub_do_invite
+bind pub o .op pub_do_op
+bind pub o .deop pub_do_deop
+bind pub o .voice pub_do_voice
+bind pub o .devoice pub_do_devoice
+bind pub o .topic pub_do_topic
+bind pub o .perm pub_do_perm
+bind pub o .kick pub_do_kick
+bind pub o .unban pub_do_unban
+bind pub o .unperm pub_do_unperm
+bind pub o .bans pub_do_bans
+bind pub m .mode pub_do_mode
+bind pub m .away pub_do_away
+bind pub m .back pub_do_back
+bind pub o .bot pub_do_bot
+bind pub m .rehash pub_do_rehash
+bind pub m .restart pub_do_restart
+bind pub m .jump pub_do_jump
+bind pub m .save pub_do_save
+bind pub m .ban ban:pub
+bind pub m .kban kban:pub
+bind pub m .chattr chattr:pub
+bind pub m .act pub:act
+bind pub m .say pub:say
+bind pub m .global pub:global
+bind pub * .access pub_access
+bind pub * .version pub_version
+bind pub m .info pub_info
+bind pub m .part part:pub
+bind pub m .join:pub
+bind pub m .hop hop:pub
+bind pub m .cycle hop:pub
+bind msg m .hop hop:msg
+bind pub m .botnick botnick:pub
+bind pub m .uptime uptime:pub
+bind pub m .adduser adduser:pub
+bind pub m .deluser deluser:pub
+bind dcc fn|fn chancontrol pub_chancontrol
+bind dcc fn|fn bugs bugs
+
+#Edit the URL in the first NOTICE line to your own url for chancontrol.html Feel free to use the one on my dropbox. 
+#If you do use mine, make sure you update your bot (chancontrol.tcl) regularly.
+#Dropbox link: https://db.tt/tMADHne2/
+
+proc pub_do_bot {nick host hand channel text} {
+        puthelp "NOTICE $nick :If you need help with a command, visit: https://db.tt/tMADHne2 for a detailled list"
+        puthelp "NOTICE $nick :You can also use the DCC window with the bot and type .chancontrol in there for a more detailled help"
+        return
+}
+#Do NOT edit anything else after this line
+#Do NOT edit anything else after this line
+
+proc pub_chancontrol { handle idx text } {
+		putidx $idx "               Welcome to the chancontrol.tcl help section"
+		putidx $idx "        Everything you need to know about this script is in here"
+		putidx $idx "   You can also type !bot in your channel. (assuming ! is the trigger)"
+		putidx $idx "Visit: https://dl.dropboxusercontent.com/u/11953911/irc/chancontrol/chancontrol.html
+		putidx $idx " For a more detailled help. 
+		putidx $idx "Sorking on the script and help system. To report bugs, type .bugs and follow the steps"
+}
+
+proc pub_bugs { handle idx text } {
+		putidx $idx "To report a bug, please take the conserned section f the .log file, put it on a pastebin."
+		putidx $idx "Then join #Sebastien on Undernet (irc.undernet.org) and paste us the link"
+		putidx $idx "You could also email seblemery[removethis]@[andthis]gmail.com with the same details"
+		putidx $idx "If your issue is not with this script but with the eggdrop in general, please join"
+		putidx $idx "a #eggdrop channel on most major networks, or join #eggdrop on freenode (irc.freenode.net)"
+}
 
 proc pub_do_invite {nick host handle channel text} {
 	global botnick
@@ -65,16 +99,6 @@ proc pub_do_invite {nick host handle channel text} {
 	putserv "PRIVMSG $channel :Done, invited $who in here."
 	putserv "NOTICE $who :You have been invited in $channel by $nick."
 	return 0
-}
-
-proc pub_do_bot {nick host hand channel text} {
-	puthelp "NOTICE $nick :Listing Simple management commands. Make sure you have the required flags."
-	puthelp "NOTICE $nick :Channel Ranking: !op <nick> - !deop <nick> - !voice <nick>  - !devoice <nick> - !topic <whatever>"
-	puthelp "NOTICE $nick :User management: !adduser <handle> <*!*@host.name> - !chattr <Handle> <+|-flags>"
-	puthelp "NOTICE $nick :Disruptive user solutions: !ban <nick/host> - !unban <host> - !perm <nick> <reason>  - !kick <nick> - !bans"
-	puthelp "NOTICE $nick :Bot settigns: !rehash - !restart - !jump - !save - !away <msg> - !back - !join #chan - !part #chan - !botnick <newnick>"
-	puthelp "NOTICE $nick :!bot - Brings up this menu."
-	return
 }
 
 #op event
@@ -267,8 +291,7 @@ proc pub_do_kick {nick uhost hand chan arg} {
 	set who [lindex $arg 0]
 	set why [lrange $arg 1 end]
 	if {![onchan $who $chan]} {
-		putserv "PRIVMSG $chan :$who isnt on $chan."
-		return 1
+		putserv "PRIVMSG $chan :		return 1
 	}
 	if {[string tolower $who] eq [string tolower $botnick]} {
 		putserv "KICK $chan $nick :hah. not funny."
@@ -283,7 +306,7 @@ proc pub_do_kick {nick uhost hand chan arg} {
 		return 1
 	}
 	if {[matchattr $who +n]} {
-		putserv "KICK $chan $nick :Trying to kick my owner eh? ;Þ"
+		putserv "KICK $chan $nick :Trying to kick my owner eh? ;Ãž"
 		return 1
 	}
 	putserv "KICK $chan $who :$why"
@@ -419,10 +442,6 @@ set hopondeop 1
 set kickondeop 1
 
 #Don't Edit anything below!
-
-bind pub m "!hop" hop:pub
-bind pub m "!cycle" hop:pub
-bind msg m "hop" hop:msg
 bind mode - * hop:mode
 
 proc hop:pub { nick uhost hand chan text } {
@@ -453,16 +472,12 @@ proc hop:mode { nick uhost hand chan mc vict } {
 }
 #join/part section, newly added
 
-bind pub m "!join" join:pub
-
 proc join:pub { nick uhost hand chan text } {
 	putlog "Joining channel $text by $nick's Request"
 	putserv "PRIVMSG $chan :Joining channel $text by $nick's Request"
 	putserv "JOIN :$text"
 	channel add $text
 }
-
-bind pub m "!part" part:pub
 
 proc part:pub { nick uhost hand chan text } {
 	set chan [lindex $text 0]
@@ -476,14 +491,13 @@ proc part:pub { nick uhost hand chan text } {
 	}
 
 	putlog "Parting $chan by $nick's Request"
+	putserv "PRIVMSG $chan :Leaving channel $text by $nick's Request"
 	putserv "PART :$chan :bbl"
 	channel remove $chan
 }
 
 # End - join/part
 # botnick - small routine to bot to change nicks.
-
-bind pub m "!botnick" botnick:pub
 
 proc botnick:pub { mynick uhost hand chan text  } {
 	putlog "Changing botnick "
@@ -494,8 +508,6 @@ proc botnick:pub { mynick uhost hand chan text  } {
 
 #end
 #uptime
-
-bind pub m "!uptime" uptime:pub
 
 proc uptime:pub {nick host handle chan arg} {
 	global uptime
@@ -524,7 +536,6 @@ proc chattr:pub {nick uhost handle chan arg} {
 	puthelp "privmsg $chan :Added that! $nick."
 }
 #adduser
-bind pub m "!adduser" adduser:pub
 
 proc adduser:pub {nick uhost handle chan arg} {
 	set handle [lindex $arg 0]
@@ -553,7 +564,6 @@ proc adduser:pub {nick uhost handle chan arg} {
 }
 #end
 #deluser
-bind pub m "!deluser" deluser:pub
 
 proc deluser:pub {nick uhost handle chan arg} {
 	set handle [lindex $arg 0]
@@ -573,29 +583,33 @@ proc deluser:pub {nick uhost handle chan arg} {
 proc pub_access {nick uhost handle chan arg} {
 
 	if {![validuser [lindex $arg 0]]} {puthelp "privmsg $chan :[lindex $arg 0] does not exist in my database. (use !adduser)";return}
-	if {[matchattr [lindex $arg 0] n]} {puthelp "privmsg $chan :[lindex $arg 0] is an \002Owner\002 (+n)";return}
-	if {[matchattr [lindex $arg 0] m]} {puthelp "privmsg $chan :[lindex $arg 0] is a \002Master\002 (+m)";return}
-	if {[matchattr [lindex $arg 0] o]} {puthelp "privmsg $chan :[lindex $arg 0] is an \002Operator\002 (+o)";return}
-	if {[matchattr [lindex $arg 0] f]} {puthelp "privmsg $chan :[lindex $arg 0] is an \002Friendly user\002 (+f)";return}
-	puthelp "privmsg $chan :[lindex $arg 0] is a basic user"
+	if {[matchattr [lindex $arg 0] n]} {puthelp "privmsg $chan :[lindex $arg 0] is a \00314\[\0034Bot owner\00314\]\0035 +n\003";return}
+	if {[matchattr [lindex $arg 0] m]} {puthelp "privmsg $chan :[lindex $arg 0] is a \00314\[\0034Channel manager\00314\]\0035 +m\003";return}
+	if {[matchattr [lindex $arg 0] o]} {puthelp "privmsg $chan :[lindex $arg 0] is a \00314\[\0034Channel operator\00314\]\0035 +o\003";return}
+	if {[matchattr [lindex $arg 0] f]} {puthelp "privmsg $chan :[lindex $arg 0] is a \00314\[\0034Friendly user\00314\]\0035 +f\003";return}
+	puthelp "privmsg $chan :[lindex $arg 0] has no access to the bot yet, To add him, use !adduser <handle> <*!*@host.name>"
+}
+#version return
+proc pub_version {nick uhost handle chan arg} {
+	puthelp "privmsg $chan :chancontrol.tcl is at Version 2.1 available at: http://tinyurl.com/chancontrol"
 }
 
 #info
 proc pub_info {nick uhost handle chan arg} {
 	if {$arg eq "none"} {
-		setuser $handle info ""
-		puthelp "privmsg $chan :Done! $nick."
+		setchaninfo $handle $chan none
+		puthelp "privmsg $chan :Infoline removed, $nick."
 	}
 	if {$arg != "none" && $arg != ""} {
-		setuser $handle info $arg
-		puthelp "privmsg $chan :Done! $nick."
+		setchaninfo $handle $chan $arg
+		puthelp "privmsg $chan :$nick, your info was updated to: $arg "
 	}
 	if {$arg eq ""} {
-		if {[getuser $handle info] == ""} {
-			puthelp "privmsg $chan :$nick: You don't have an info."
+		if {[getchaninfo $handle $chan] == ""} {
+			puthelp "privmsg $chan :$nick: You don't have an infoline on $chan use !info <text> to set one"
 			return 0
 		}
-		puthelp "privmsg $chan :$nick: Your info is: [getuser $handle info]"
+		puthelp "privmsg $chan :$nick: Your infoline for $chan is: [getchaninfo $handle $chan]"
 	}
 }
 
@@ -611,5 +625,5 @@ proc pub:global {nick uhost handle chan arg} {
 }
 proc pub:act {nick uhost handle chan arg} {puthelp "privmsg $chan :\001ACTION $arg\001"}
 
-putlog "chancontrol.tcl 4.2.0 by Sebastien @ freenode"
-putlog "based on pubcommand.tcl v3.0 by anto @ dal.net"
+putlog "chancontrol.tcl 2.2 by Sebastien @ Undernet"
+

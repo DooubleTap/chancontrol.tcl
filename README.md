@@ -1,23 +1,5 @@
 <html>
 <title>chancontrol.tcl help file - version 1.2 - Last update: 6/16/2016</title>
-<head>
-</style>
-</head>
-<body text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
-<br>
-<h1 align=center>chancontrol.tcl v1.2</h1>
-<br>
-<br>
-<hr align="CENTER" size="1" width="100%">
-# designed to work with eggdrop 1.8 or higher<br>
-# chancontrol.tcl copyright (c) 2016 by Sebastien &lt;<a href="mailto:seblemery[remove]@[remove]gmail.com">seblemery[remove]@[remove]gmail.com</a>&gt;<br>
-# Description;<br>
-# This script is essential for channel management eggdrops. (If you desire public commands)<br>
-# It includes commands that you would naturally expect to see in a channel.<br>
-# This script is always updated, get the latest release here: http://tinyurl.com/chancontrol <br>
-
-<br>
-<br>
 <h2>Index</h2>
 <ul>
 <li><a href="#description">Description</a>

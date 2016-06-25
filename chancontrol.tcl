@@ -51,7 +51,7 @@ bind dcc fn|fn bugs bugs
 #Dropbox link: https://db.tt/tMADHne2/
 
 proc pub_do_bot {nick host hand channel text} {
-        puthelp "NOTICE $nick :If you need help with a command, visit: https://db.tt/tMADHne2 for a detailled list"
+        puthelp "NOTICE $nick :If you need help with a command, visit: https://github.com/SebLemery/chancontrol.tcl/blob/master/README.md for a detailled list"
         puthelp "NOTICE $nick :You can also use the DCC window with the bot and type .chancontrol in there for a more detailled help"
         return
 }
@@ -62,7 +62,7 @@ proc pub_chancontrol { handle idx text } {
 		putidx $idx "               Welcome to the chancontrol.tcl help section"
 		putidx $idx "        Everything you need to know about this script is in here"
 		putidx $idx "   You can also type !bot in your channel. (assuming ! is the trigger)"
-		putidx $idx "Visit: https://dl.dropboxusercontent.com/u/11953911/irc/chancontrol/chancontrol.html
+		putidx $idx "Visit: https://github.com/SebLemery/chancontrol.tcl
 		putidx $idx " For a more detailled help. 
 		putidx $idx "Sorking on the script and help system. To report bugs, type .bugs and follow the steps"
 }
@@ -591,7 +591,7 @@ proc pub_access {nick uhost handle chan arg} {
 }
 #version return
 proc pub_version {nick uhost handle chan arg} {
-	puthelp "privmsg $chan :chancontrol.tcl is at Version 2.1 available at: http://tinyurl.com/chancontrol"
+	puthelp "privmsg $chan :chancontrol.tcl is at Version 2.1 available at: https://github.com/SebLemery/chancontrol.tcl"
 }
 
 #info

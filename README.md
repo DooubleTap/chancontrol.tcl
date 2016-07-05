@@ -13,7 +13,8 @@
 <a name="description"><h2>Description</h2></a>
 This bot has protection scripts enabled by default when oped in a channel. <br>
 If you want some specific users "protected" from those, add them +f with .chattr<br>
-<b>All commands</b> in this help file are assumed to have "." as a trigger. For example .op .kick .rehash. To see the trigger on the bot check the config file<br></h4>
+<b>All commands</b> in this help file are assumed to have "." as a trigger. For example .op .kick .rehash.<br>
+To see the trigger on the bot check the config file<br></h4>
 <br>
 <br>
 <a name="commands"><h2>Commands</h2></a>

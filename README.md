@@ -12,15 +12,15 @@
 <br>
 <a name="description"><h2>Description</h2></a>
 This bot has protection scripts enabled by default when oped in a channel. <br>
-If you want some specific users "protected" from those, add them +f with !chattr<br>
-<h4>All commands in this help file are assumed to have "!" as a trigger. For example !op !kick !rehash. To see the trigger on the bot type !trigger<br></h4>
+If you want some specific users "protected" from those, add them +f with .chattr<br>
+<h4>All commands in this help file are assumed to have "." as a trigger. For example .op .kick .rehash. To see the trigger on the bot check the config file<br></h4>
 <br>
 <br>
 <a name="commands"><h2>Commands</h2></a>
 <table "id="t01"> 
 <caption><h3>DCC/telnet commands (you need a handle(user) on the bot)</h3></caption>
   <tr>
-    <th><b>!command</b></th>
+    <th><b>.command</b></th>
     <th><b>Description</b></th>
   </tr>
   <tr>
@@ -41,19 +41,19 @@ If you want some specific users "protected" from those, add them +f with !chattr
 <table "id="t01"> 
 <caption><h3>Available to everyone (NO flags needed)</h3></caption>
   <tr>
-    <th><b>!command</b></th>
+    <th><b>.command</b></th>
     <th><b>Description</b></th>
   </tr>
   <tr>
-    <td>!version</td>
+    <td>.version</td>
     <td>Get the version infos and link to this script via /notice</td>
   </tr>
   <tr>
-    <td>!bot</td>
+    <td>.bot</td>
     <td>Receive a list of commands available to you via /notice</td>
   </tr>
   <tr>
-    <td>!access &lt;nickname&gt;</td>
+    <td>.access &lt;nickname&gt;</td>
     <td>see someone's access level on the channel</td>
   </tr>
 </table>
@@ -62,15 +62,15 @@ If you want some specific users "protected" from those, add them +f with !chattr
 <table "id="t01">
 <caption><h3>Channel Voices (+v)</h3></caption>
   <tr>
-    <th><b>!command</b></th>
+    <th><b>.command</b></th>
     <th><b>Description</b></th>
   </tr>
   <tr>
-    <td>!voice [nick]</td>
+    <td>.voice [nick]</td>
     <td>voice (+v) a user, or yourself if no nick is specified</td>
   </tr>
   <tr>
-    <td>!devoice [nick]</td>
+    <td>.devoice [nick]</td>
     <td>devoice (-v) a user, or yourself if no nick is specified</td>
   </tr>
 </table>
@@ -79,51 +79,51 @@ If you want some specific users "protected" from those, add them +f with !chattr
 <table "id="t01">
 <caption><h3>Channel ops (+o)</h3></caption>
   <tr>
-    <th><b>!command</b></th>
+    <th><b>.command</b></th>
     <th><b>Description</b></th>
   </tr>
   <tr>
-    <td>!op [nick]</td>
+    <td>.op [nick]</td>
     <td>op (+o) a user, or yourself if no nick is specified</td>
   </tr>
   <tr>
-    <td>!deop [nick]</td>
+    <td>.deop [nick]</td>
     <td>deop (-o) a user, or yourself if no nick is specified</td>
   </tr>
   <tr>
-    <td>!kick &lt;nick&gt; [reason]</td>
+    <td>.kick &lt;nick&gt; [reason]</td>
     <td>kick a user from the channel, default reason is used if not specified</td>
   </tr>
   <tr>
-    <td>!ban &lt;nick|host&gt;</td>
+    <td>.ban &lt;nick|host&gt;</td>
     <td>ban a user from the channel without kicking him. (mute)</td>
   </tr>
   <tr>
-    <td>!unban &lt;nick|host&gt;</td>
+    <td>.unban &lt;nick|host&gt;</td>
     <td>unban a user from the channel without kicking him. (mute)</td>
   </tr>
   <tr>
-    <td>!kban &lt;nick|host&gt;</td>
+    <td>.kban &lt;nick|host&gt;</td>
     <td>kick and ban a user from the channel, default reason is used if not specified</td>
   </tr>
   <tr>
-    <td>!perm &lt;nick|host&gt; &lt;reason&gt; </td>
+    <td>.perm &lt;nick|host&gt; &lt;reason&gt; </td>
     <td>add a nick|host to the bot's blacklist, you NEED to specify a reason<br>and the user needs to be in the channel.</td>
   </tr>
   <tr>
-    <td>!unperm &lt;host&gt; &lt;reason&gt; </td>
+    <td>.unperm &lt;host&gt; &lt;reason&gt; </td>
     <td>Remove a host from the bot's blacklist and channel. </td>
   </tr>
   <tr>
-    <td>!bans</td>
+    <td>.bans</td>
     <td>List all bans on the channel. Sent via /notice</td>
   </tr>
   <tr>
-    <td>!invite &lt;nick&gt;</td>
+    <td>.invite &lt;nick&gt;</td>
     <td>Makes the bot send an /invite to the specified nick</td>
   </tr>
   <tr>
-    <td>!topic &lt;newtopic&gt;</td>
+    <td>.topic &lt;newtopic&gt;</td>
     <td>Change the channel's topic</td>
   </tr>
 </table>
@@ -132,39 +132,39 @@ If you want some specific users "protected" from those, add them +f with !chattr
 <table "id="t01">
 <caption><h3>Channel managers (+m)</h3></caption>
   <tr>
-    <th><b>!command</b></th>
+    <th><b>.command</b></th>
     <th><b>Description</b></th>
   </tr>
   <tr>
-    <td>!adduser &lt;handle&gt; &lt;nick!user@host&gt;</td>
+    <td>.adduser &lt;handle&gt; &lt;nick!user@host&gt;</td>
     <td>Change the channel's topic</td>
   </tr>
   <tr>
-    <td>!deluser &lt;handle&gt;</td>
+    <td>.deluser &lt;handle&gt;</td>
     <td>removes a user from the bot (cannot remove users with same or higher level)</td>
   </tr>
   <tr>
-    <td>!chattr &lt;handle&gt; &lt;+|-flag</td>
+    <td>.chattr &lt;handle&gt; &lt;+|-flag</td>
     <td>Change a user's flags on the channel.</td>
   </tr>
   <tr>
-    <td>!mode &lt;+|-mode&gt;</td>
+    <td>.mode &lt;+|-mode&gt;</td>
     <td>Change channel modes</td>
   </tr>
   <tr>
-    <td>!say &lt;message&gt;</td>
+    <td>.say &lt;message&gt;</td>
     <td>make the bot say something in the channel</td>
   </tr>
   <tr>
-    <td>!act &lt;message&gt;</td>
+    <td>.act &lt;message&gt;</td>
     <td>make the bot do an action (/describe) in the channel</td>
   </tr>
   <tr>
-    <td>!away &lt;newtopic&gt;</td>
+    <td>.away &lt;newtopic&gt;</td>
     <td>Change the channel's topic</td>
   </tr>
   <tr>
-    <td>!back</td>
+    <td>.back</td>
     <td>removes the bot's away message</td>
   </tr>
 </table>
@@ -173,27 +173,27 @@ If you want some specific users "protected" from those, add them +f with !chattr
 <table "id="t01">
 <caption><h3>Bot global managers (+n)<br>Only the owner of the bot should have this flag</h3></caption>
   <tr>
-    <td>!rehash</td>
+    <td>.rehash</td>
     <td>rehash the bot and reload scripts.</td>
   </tr>
   <tr>
-    <td>!restart</td>
+    <td>.restart</td>
     <td>kill and restart the bot completely</td>
   </tr>
   <tr>
-    <td>!jump &lt;server.name.to.jump.at&gt;</td>
+    <td>.jump &lt;server.name.to.jump.at&gt;</td>
     <td>make the bot jump on another server<br>This can be used to move the bot on a different network</td>
   </tr>
   <tr>
-    <td>!info &lt;text|none&gt;</td>
+    <td>.info &lt;text|none&gt;</td>
     <td>set your INFO on the eggdrop, or use <b>none</b> to remove it</td>
   </tr>
   <tr>
-    <td>!save</td>
+    <td>.save</td>
     <td>force the bot to save it's userlist and channel settings</td>
   </tr>
   <tr>
-    <td>!global &lt;text&gt;</td>
+    <td>.global &lt;text&gt;</td>
     <td>make the bot sent a message to all the channels he is parked in.<br>useful for maintenance, but it's spammy..</td>
   </tr>
 </table>

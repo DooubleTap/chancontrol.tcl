@@ -1,4 +1,4 @@
-# chancontrol.tcl
+# chancontrol.tcl - STILL BETA (Could cause explosions) :)
 # Script available at: https://github.com/SebLemery/chancontrol.tcl
 # TinyURL: http://tinyurl.com/chancontrol
 # Dropbox link: https://db.tt/tMADHne2/

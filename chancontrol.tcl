@@ -22,6 +22,10 @@ set cc(backchan) "#beep"
 
 #You don't have to edit anything beyond this point. 
 
+# Script version. Useful to keep track of the latest devlopement of this script.
+# Don't change it unless you hate puppies
+set cc(version) "\002chancontrol.tcl 4.5\002"
+
 ##Commands
 bind pub o [string trim $cc(cmdchar)]invite pub_do_invite
 bind pub o [string trim $cc(cmdchar)]op pub_do_op
@@ -159,7 +163,7 @@ proc pub_do_deop {nick host handle channel testes} {
 	global botnick
 	set who [lindex $testes 0]
 	if {$who eq ""} {
-		putserv "NOTICE $nick :Try: .deop <nick>"
+	putserv "MODE $channel -o $nick"
 		return 1
 	}
 	if {[string tolower $who] == [string tolower $botnick]} {
@@ -192,6 +196,7 @@ proc pub_do_voice {nick host handle channel testes  } {
 			return 1
 		}
 		if {[isvoice $channel]} {
+	putserv "MODE $channel +v $nick"
 			return 1
 		}
 		putserv "MODE $channel +v $nick"
@@ -216,7 +221,7 @@ proc pub_do_devoice {nick host handle channel testes} {
 	global botnick
 	set who [lindex $testes 0]
 	if {$who eq ""} {
-		putserv "NOTICE $nick :Try: .devoice <nick>"
+	putserv "MODE $channel -v $nick"
 		return 1
 	}
 	if {[string tolower $who] == [string tolower $botnick]} {
@@ -627,12 +632,12 @@ proc pub_access {nick uhost handle chan text} {
 	}
 	puthelp "privmsg $chan :$u_hand has no access to the bot yet, To add him, use !adduser <handle> <*!*@host.name>"
 }
-
 #version return
 proc pub_version {nick uhost handle chan arg} {
-	puthelp "NOTICE $nick :$lol(version) available at: https://github.com/SebLemery/chancontrol.tcl"
+	global cc
+	puthelp "NOTICE $nick :Version: $cc(version) available at: https://github.com/SebLemery/chancontrol.tcl"
 }
-set lol(version) "\002chancontrol.tcl 4.5\002"
+
 #info
 proc pub_info {nick uhost handle chan arg} {
 	if {$arg eq "none"} {
@@ -664,5 +669,5 @@ proc pub:global {nick uhost handle chan arg} {
 }
 proc pub:act {nick uhost handle chan arg} {puthelp "privmsg $chan :\001ACTION $arg\001"}
 
-putlog "$lol(version) by Sebastien @ Undernet"
+putlog "[string trim $cc(version)] by Sebastien @ Undernet"
 #eof

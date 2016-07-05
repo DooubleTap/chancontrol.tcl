@@ -1,9 +1,9 @@
-# chancontrol.tcl v4.5
+# chancontrol.tcl
 # Script available at: https://github.com/SebLemery/chancontrol.tcl
 # TinyURL: http://tinyurl.com/chancontrol
+# Dropbox link: https://db.tt/tMADHne2/
 # Read chancontrol.html for help. Also, host it so people have access to it.(optional)
 #
-
 ## Setup
 
 # Set the cmdchr here, (trigger) that will be used in front of commands
@@ -23,7 +23,8 @@ set cc(backchan) "#beep"
 
 # Script version. Useful to keep track of the latest devlopement of this script.
 # Don't change it unless you hate puppies
-set cc(version) "\002chancontrol.tcl 4.5\002"
+set cc(version_number) "4.5.2"
+set cc(version) "\002\[chancontrol.tcl $cc(version_number)\]\002"
 
 ##Commands
 bind pub o [string trim $cc(cmdchar)]invite pub_do_invite
@@ -51,7 +52,7 @@ bind pub m [string trim $cc(cmdchar)]chattr chattr:pub
 bind pub m [string trim $cc(cmdchar)]act pub:act
 bind pub m [string trim $cc(cmdchar)]say pub:say
 bind pub m [string trim $cc(cmdchar)]global pub:global
-bind pub * [string trim $cc(cmdchar)]access pub_access
+bind pub * [string trim $cc(cmdchar)]whois pub_access
 bind pub * [string trim $cc(cmdchar)]version pub_version
 bind pub m [string trim $cc(cmdchar)]info pub_info
 bind pub m [string trim $cc(cmdchar)]part part:pub
@@ -605,31 +606,32 @@ proc deluser:pub {nick uhost handle chan arg} {
 
 #access
 proc pub_access {nick uhost handle chan text} {
+	global cc
 	set u_nick [lindex [split $text] 0]
 	set u_hand [nick2hand $u_nick $chan]
 	set g_flags [chattr $u_hand]
 	set c_flags [lindex [split [chattr $u_hand $chan] | ] 1]
 	if {![validuser $u_hand]} {
-		puthelp "privmsg $chan :$u_hand does not exist in my database. (use !adduser)"
+		puthelp "privmsg $chan :$u_hand does not exist in my database. Use [string trim $cc(cmdchar)]adduser <handle> <*!*@host.name>"
 		return
 	}
-	if {[matchattr $u_hand n]} {
+	if {[matchattr $u_hand |n $chan]} {
 		puthelp "privmsg $chan :$u_hand is a \00314\[\0034Bot owner\00314\]\0035 +n\003 \[Global flags: $g_flags Channel flags: $c_flags\]"
 		return
 	}
-	if {[matchattr $u_hand m]} {
+	if {[matchattr $u_hand |m $chan]} {
 		puthelp "privmsg $chan :$u_hand is a \00314\[\0034Channel manager\00314\]\0035 +m\003  \[Global flags: $g_flags Channel flags: $c_flags\]"
 		return
 	}
-	if {[matchattr $u_hand o]} {
+	if {[matchattr $u_hand |o $chan]} {
 		puthelp "privmsg $chan :$u_hand is a \00314\[\0034Channel operator\00314\]\0035 +o\003 \[Global flags: $g_flags Channel flags: $c_flags\]"
 		return
 	}
-	if {[matchattr $u_hand f] } {
+	if {[matchattr $u_hand |f $chan] } {
 		puthelp "privmsg $chan :$u_hand is a \00314\[\0034Friendly user\00314\]\0035 +f\003 \[Global flags: $g_flags Channel flags: $c_flags\]"
 		return
 	}
-	puthelp "privmsg $chan :$u_hand has no access to the bot yet, To add him, use !adduser <handle> <*!*@host.name>"
+	puthelp "privmsg $chan :$u_hand has no access to the bot in this channel yet, To add him, use [string trim $cc(cmdchar)]chattr $u_hand +flags"
 }
 #version return
 proc pub_version {nick uhost handle chan arg} {

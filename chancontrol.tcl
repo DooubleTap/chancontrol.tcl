@@ -1,4 +1,3 @@
-# chancontrol.tcl v2.2
 # Script available at: https://github.com/SebLemery/chancontrol.tcl
 # TinyURL: http://tinyurl.com/chancontrol
 # Dropbox link: https://db.tt/tMADHne2/

@@ -1,53 +1,72 @@
+# chancontrol.tcl v4.5
 # Script available at: https://github.com/SebLemery/chancontrol.tcl
 # TinyURL: http://tinyurl.com/chancontrol
 # Dropbox link: https://db.tt/tMADHne2/
 # Read chancontrol.html for help. Also, host it so people have access to it.(optional)
 #
+
+## Setup
+
+# Set the cmdchr here, (trigger) that will be used in front of commands
+# For example, if you set it to "!" All commands will be prefixed by !
+# like !op !kick !ban.. If you don't change it, it will be .op .kick .bab
+set cc(cmdchar) "."
+
+# Set the main support channel, when people need help, they will be told 
+# To join this channel for support or for bans. 
+set cc(mainchan) "#chancontrol"
+
+# Set the back channel, this channel should be +s or +k even. Some technical
+# stuff will be displayed there, also, the scanner will spam there, a lot.
+set cc(backchan) "#beep"
+
 #You don't have to edit anything beyond this point. 
 
 ##Commands
-bind pub o .invite pub_do_invite
-bind pub o .op pub_do_op
-bind pub o .deop pub_do_deop
-bind pub o .voice pub_do_voice
-bind pub o .devoice pub_do_devoice
-bind pub o .topic pub_do_topic
-bind pub o .perm pub_do_perm
-bind pub o .kick pub_do_kick
-bind pub o .unban pub_do_unban
-bind pub o .unperm pub_do_unperm
-bind pub o .bans pub_do_bans
-bind pub m .mode pub_do_mode
-bind pub m .away pub_do_away
-bind pub m .back pub_do_back
-bind pub o .bot pub_do_bot
-bind pub m .rehash pub_do_rehash
-bind pub m .restart pub_do_restart
-bind pub m .jump pub_do_jump
-bind pub m .save pub_do_save
-bind pub m .ban ban:pub
-bind pub m .kban kban:pub
-bind pub m .chattr chattr:pub
-bind pub m .act pub:act
-bind pub m .say pub:say
-bind pub m .global pub:global
-bind pub * .access pub_access
-bind pub * .version pub_version
-bind pub m .info pub_info
-bind pub m .part part:pub
-bind pub m .join:pub
-bind pub m .hop hop:pub
-bind pub m .cycle hop:pub
-bind pub m .hop hop:msg
-bind pub m .botnick botnick:pub
-bind pub m .uptime uptime:pub
-bind pub m .adduser adduser:pub
-bind pub m .deluser deluser:pub
+bind pub o [string trim $cc(cmdchar)]invite pub_do_invite
+bind pub o [string trim $cc(cmdchar)]op pub_do_op
+bind pub o [string trim $cc(cmdchar)]deop pub_do_deop
+bind pub o [string trim $cc(cmdchar)]voice pub_do_voice
+bind pub o [string trim $cc(cmdchar)]devoice pub_do_devoice
+bind pub o [string trim $cc(cmdchar)]topic pub_do_topic
+bind pub o [string trim $cc(cmdchar)]perm pub_do_perm
+bind pub o [string trim $cc(cmdchar)]kick pub_do_kick
+bind pub o [string trim $cc(cmdchar)]unban pub_do_unban
+bind pub o [string trim $cc(cmdchar)]unperm pub_do_unperm
+bind pub o [string trim $cc(cmdchar)]bans pub_do_bans
+bind pub m [string trim $cc(cmdchar)]mode pub_do_mode
+bind pub m [string trim $cc(cmdchar)]away pub_do_away
+bind pub m [string trim $cc(cmdchar)]back pub_do_back
+bind pub o [string trim $cc(cmdchar)]bot pub_do_bot
+bind pub m [string trim $cc(cmdchar)]rehash pub_do_rehash
+bind pub m [string trim $cc(cmdchar)]restart pub_do_restart
+bind pub m [string trim $cc(cmdchar)]jump pub_do_jump
+bind pub m [string trim $cc(cmdchar)]save pub_do_save
+bind pub m [string trim $cc(cmdchar)]ban ban:pub
+bind pub m [string trim $cc(cmdchar)]kban kban:pub
+bind pub m [string trim $cc(cmdchar)]chattr chattr:pub
+bind pub m [string trim $cc(cmdchar)]act pub:act
+bind pub m [string trim $cc(cmdchar)]say pub:say
+bind pub m [string trim $cc(cmdchar)]global pub:global
+bind pub * [string trim $cc(cmdchar)]access pub_access
+bind pub * [string trim $cc(cmdchar)]version pub_version
+bind pub m [string trim $cc(cmdchar)]info pub_info
+bind pub m [string trim $cc(cmdchar)]part part:pub
+bind pub m [string trim $cc(cmdchar)]join:pub
+bind pub m [string trim $cc(cmdchar)]hop hop:pub
+bind pub m [string trim $cc(cmdchar)]cycle hop:pub
+bind pub m [string trim $cc(cmdchar)]hop hop:msg
+bind pub m [string trim $cc(cmdchar)]botnick botnick:pub
+bind pub m [string trim $cc(cmdchar)]uptime uptime:pub
+bind pub m [string trim $cc(cmdchar)]adduser adduser:pub
+bind pub m [string trim $cc(cmdchar)]deluser deluser:pub
 bind dcc fn|fn chancontrol pub_chancontrol
 bind dcc fn|fn keepalive dobinddcckeepalive
 bind dcc fn|fn undokeepalive undobinddcckeepalive
 
 proc pub_do_bot {nick host hand channel text} {
+	puthelp "NOTICE $nick :The trigger for commands is [string trim $cc(cmdchar)] so [string trim $cc(cmdchar)]op [string trim $cc(cmdchar)]voice [string trim $cc(cmdchar)]kick..."
+	puthelp "NOTICE $nick :The main support channel for the bot is [string trim $cc(backchan)]"
         puthelp "NOTICE $nick :If you need help with a command, visit: https://github.com/SebLemery/chancontrol.tcl for a detailled list"
 	puthelp "NOTICE $nick :This bot runs chancontrol.tcl 4.5, if it's not the latest, tell the bot owner"
         return
@@ -611,9 +630,9 @@ proc pub_access {nick uhost handle chan text} {
 
 #version return
 proc pub_version {nick uhost handle chan arg} {
-	puthelp "NOTICE $nick :chancontrol.tcl is at Version 4.5 available at: https://github.com/SebLemery/chancontrol.tcl"
+	puthelp "NOTICE $nick :$lol(version) available at: https://github.com/SebLemery/chancontrol.tcl"
 }
-
+set lol(version) "\002chancontrol.tcl 4.5\002"
 #info
 proc pub_info {nick uhost handle chan arg} {
 	if {$arg eq "none"} {
@@ -645,5 +664,5 @@ proc pub:global {nick uhost handle chan arg} {
 }
 proc pub:act {nick uhost handle chan arg} {puthelp "privmsg $chan :\001ACTION $arg\001"}
 
-putlog "chancontrol.tcl 4.5"
-
+putlog "$lol(version) by Sebastien @ Undernet"
+#eof

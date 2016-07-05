@@ -1,5 +1,5 @@
 <html>
-<title>chancontrol.tcl help file - version 1.2 - Last update: 6/16/2016</title>
+<title>chancontrol.tcl help file - PLEASE, keep in mind, this is a work in progess</title>
 <h2>Index</h2>
 <ul>
 <li><a href="#description">Description</a>

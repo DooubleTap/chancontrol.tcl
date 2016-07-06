@@ -54,8 +54,8 @@ To see the trigger on the bot check the config file<br></h4>
     <td>Receive a list of commands available to you via /notice</td>
   </tr>
   <tr>
-    <td>.access &lt;nickname&gt;</td>
-    <td>see someone's access level on the channel</td>
+    <td>.whois &lt;nickname&gt;</td>
+    <td>see "who is" someone, their flags and infos.</td>
   </tr>
 </table>
 <br>

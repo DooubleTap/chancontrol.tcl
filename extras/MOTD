@@ -1,0 +1,17 @@
+  Connected to %B, running %V
+  Hey, My name is %b%B%b and I am running %b%V%b, on %b%U%b.
+%{+n}
+  You are an owner of this bot. 
+  Don't Fuck anything up.
+  If you have issues, join #chancontrol and speak to Sebastien
+%{-}
+  Use %b.help%b for basic eggdrop help
+  Use %b.help <command>%b for help on a specific command.
+  Use %b.help all%b to get a full command list.
+  Use %b.help *somestring*%b to list any help texts containing "somestring".
+
+   You can also use %b.chancontrol%b to view the help system from the 
+   %bchancontrol.tcl%b script on this bot. A detailled help interface is 
+   available on: https://github.com/SebLemery/chancontrol.tcl
+   If you have any questions, join %b#chancontrol%b on %birc://irc.undernet.org/%b
+	

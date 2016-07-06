@@ -33,8 +33,8 @@ To see the trigger on the bot check the config file<br></h4>
     <td>list the help file with detailled examples</td>
   </tr>
   <tr>
-    <td>.alert (TO BE ADDED)</td>
-    <td>Sends a notice to the bot owners (+n) because you need help right now</td>
+    <td>.ops <text></td>
+    <td>Sends a notice to the backchannel, to alert everyone in there that someone somewhere needs your help, and why (if specified)</td>
   </tr>
 </table>
 <br>

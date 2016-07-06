@@ -29,8 +29,8 @@ To see the trigger on the bot check the config file<br></h4>
     <td>Send a blank line to the bot to help you keep the connection in DCC<br>Really useful when your home connection sucks</td>
   </tr>
   <tr>
-    <td>.chancontrol</td>
-    <td>list the help file with detailled examples</td>
+    <td>.help</td>
+    <td>To be completed<br>help system, with examples</td>
   </tr>
   <tr>
     <td>.ops <text></td>

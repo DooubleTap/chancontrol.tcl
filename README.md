@@ -34,7 +34,7 @@ To see the trigger on the bot check the config file<br></h4>
   </tr>
   <tr>
     <td>.ops <text></td>
-    <td>Sends a notice to the backchannel, to alert everyone in there that someone somewhere needs your help, and why (if specified)</td>
+    <td>Sends a notice to the backchannel, to alert everyone in there that someone<br> somewhere needs your help, and why (if specified)</td>
   </tr>
 </table>
 <br>

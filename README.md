@@ -97,23 +97,19 @@ To see the trigger on the bot check the config file<br></h4>
   </tr>
   <tr>
     <td>.ban &lt;nick|host&gt;</td>
-    <td>ban a user from the channel without kicking him. (mute)</td>
+    <td>ban a user from the channel and kicks him.</td>
   </tr>
   <tr>
     <td>.unban &lt;nick|host&gt;</td>
     <td>unban a user from the channel without kicking him. (mute)</td>
   </tr>
   <tr>
-    <td>.kban &lt;nick|host&gt;</td>
-    <td>kick and ban a user from the channel, default reason is used if not specified</td>
-  </tr>
-  <tr>
-    <td>.perm &lt;nick|host&gt; &lt;reason&gt; </td>
+    <td>.blacklist &lt;nick|host&gt; &lt;reason&gt; </td>
     <td>add a nick|host to the bot's blacklist, you NEED to specify a reason<br>and the user needs to be in the channel.</td>
   </tr>
   <tr>
-    <td>.unperm &lt;host&gt; &lt;reason&gt; </td>
-    <td>Remove a host from the bot's blacklist and channel. </td>
+    <td>.whitelist &lt;host&gt; &lt;reason&gt; </td>
+    <td>Remove a host from the bot's blacklist on the channel. </td>
   </tr>
   <tr>
     <td>.bans</td>

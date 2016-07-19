@@ -1,78 +1,212 @@
-# chancontrol.tcl - STILL BETA (Could cause explosions) :)
+# chancontrol.tcl
 # Script available at: https://github.com/SebLemery/chancontrol.tcl
 # TinyURL: http://tinyurl.com/chancontrol
 # Dropbox link: https://db.tt/tMADHne2/
 # Read chancontrol.html for help. Also, host it so people have access to it.(optional)
-#
-## Setup
+###
+# Disclaimer. Right now, this bot is still in BETA. Stuff might be broken, 
+# fires and explosions could happen, debris will probably fall on you too.
+# Use it at your own risks, don't Give out your parrword to ANYONE. 
+# ***DO NOT GIVE +n TO ANYONE, THEY CAN DELETE EVERYTHING ON IT***
+# Read about eggdrop flags and how to use them on eggheads.org
+# Here: http://www.eggheads.org/support/egghtml/1.6.16/users.html
+
+## Setup  ***YOU HAVE STUFF TO EDIT HERE***
 
 # Set the cmdchr here, (trigger) that will be used in front of commands
 # For example, if you set it to "!" All commands will be prefixed by !
 # like !op !kick !ban.. If you don't change it, it will be .op .kick .bab
 set cc(cmdchar) "."
 
-# Set the main support channel, when people need help, they will be told 
-# To join this channel for support or for bans. 
-set cc(mainchan) "#chancontrol"
+# This is your channel, the public one, where everyone goes to.
+set cc(mainchan) "#mainchan"
 
-# Set the back channel, this channel should be +s or +k even. Some technical
-# stuff will be displayed there, also, the scanner will spam there, a lot.
-set cc(backchan) "#beep"
+# Set the back channel, this channel will have modes +s set automatically
+# Unless you change it in the next setting. 
+# If ever !ops is used, the people in there will receive the notice.
+# When bans, kicks and other channel manipulation is done, it will 
+# be sent in this channel. 
+# Note: The command INVITEME will invite you in this channel. useful if +i
+set cc(backchan) "#backchan"
 
+# This is the mode that will be set by the bot in your backchannel
+# from the setting above. Usually, +i, +s or +p is ok. 
+set cc(backmode) "+s"
+
+#You don't have to edit anything beyond this point. 
+#You don't have to edit anything beyond this point. 
 #You don't have to edit anything beyond this point. 
 
 # Script version. Useful to keep track of the latest devlopement of this script.
-# Don't change it unless you hate puppies
-set cc(version_number) "4.5.2"
+# Don't change it unless you hate puppies. Honestly, just leave it intact.
+set cc(version_number) "4.6"
 set cc(version) "\002\[chancontrol.tcl $cc(version_number)\]\002"
 
-##Commands
-bind pub o [string trim $cc(cmdchar)]invite pub_do_invite
-bind pub o [string trim $cc(cmdchar)]op pub_do_op
-bind pub o [string trim $cc(cmdchar)]deop pub_do_deop
-bind pub o [string trim $cc(cmdchar)]voice pub_do_voice
-bind pub o [string trim $cc(cmdchar)]devoice pub_do_devoice
-bind pub o [string trim $cc(cmdchar)]topic pub_do_topic
-bind pub o [string trim $cc(cmdchar)]perm pub_do_perm
-bind pub o [string trim $cc(cmdchar)]kick pub_do_kick
-bind pub o [string trim $cc(cmdchar)]unban pub_do_unban
-bind pub o [string trim $cc(cmdchar)]unperm pub_do_unperm
-bind pub o [string trim $cc(cmdchar)]bans pub_do_bans
-bind pub m [string trim $cc(cmdchar)]mode pub_do_mode
-bind pub m [string trim $cc(cmdchar)]away pub_do_away
-bind pub m [string trim $cc(cmdchar)]back pub_do_back
-bind pub o [string trim $cc(cmdchar)]bot pub_do_bot
-bind pub m [string trim $cc(cmdchar)]rehash pub_do_rehash
-bind pub m [string trim $cc(cmdchar)]restart pub_do_restart
-bind pub m [string trim $cc(cmdchar)]jump pub_do_jump
-bind pub m [string trim $cc(cmdchar)]save pub_do_save
-bind pub m [string trim $cc(cmdchar)]ban ban:pub
-bind pub m [string trim $cc(cmdchar)]kban kban:pub
-bind pub m [string trim $cc(cmdchar)]chattr chattr:pub
-bind pub m [string trim $cc(cmdchar)]act pub:act
-bind pub m [string trim $cc(cmdchar)]say pub:say
-bind pub m [string trim $cc(cmdchar)]global pub:global
-bind pub * [string trim $cc(cmdchar)]whois pub_access
-bind pub * [string trim $cc(cmdchar)]version pub_version
-bind pub m [string trim $cc(cmdchar)]info pub_info
-bind pub m [string trim $cc(cmdchar)]part part:pub
-bind pub m [string trim $cc(cmdchar)]join:pub
-bind pub m [string trim $cc(cmdchar)]hop hop:pub
-bind pub m [string trim $cc(cmdchar)]cycle hop:pub
-bind pub m [string trim $cc(cmdchar)]hop hop:msg
-bind pub m [string trim $cc(cmdchar)]botnick botnick:pub
-bind pub m [string trim $cc(cmdchar)]uptime uptime:pub
-bind pub m [string trim $cc(cmdchar)]adduser adduser:pub
-bind pub m [string trim $cc(cmdchar)]deluser deluser:pub
+##Binds (n is bot owner, and should have access to everything)
+#Flag v
+bind pub n|ov [string trim $cc(cmdchar)]voice pub_do_voice
+bind pub n|ov [string trim $cc(cmdchar)]devoice pub_do_devoice
+
+#Flag o
+bind pub n|o [string trim $cc(cmdchar)]invite pub_do_invite
+bind pub n|o [string trim $cc(cmdchar)]op pub_do_op
+bind pub n|o [string trim $cc(cmdchar)]deop pub_do_deop
+bind pub n|o [string trim $cc(cmdchar)]topic pub_do_topic
+bind pub n|o [string trim $cc(cmdchar)]kick pub_do_kick
+bind pub n|o [string trim $cc(cmdchar)]unban pub_do_unban
+bind pub n|o [string trim $cc(cmdchar)]bans pub_do_bans
+bind pub n|o [string trim $cc(cmdchar)]ban ban:pub
+
+#Flag m
+bind pub n|m [string trim $cc(cmdchar)]mode pub_do_mode
+bind pub n|m [string trim $cc(cmdchar)]whitelist pub_do_unperm
+bind pub n|m [string trim $cc(cmdchar)]blacklist pub_do_perm
+bind pub n|m [string trim $cc(cmdchar)]chattr chattr:pub
+bind pub n|m [string trim $cc(cmdchar)]act pub:act
+bind pub n|m [string trim $cc(cmdchar)]say pub:say
+
+#Flag n
+bind pub n [string trim $cc(cmdchar)]away pub_do_away
+bind pub n [string trim $cc(cmdchar)]back pub_do_back
+bind pub n [string trim $cc(cmdchar)]rehash pub_do_rehash
+bind pub n [string trim $cc(cmdchar)]restart pub_do_restart
+bind pub n [string trim $cc(cmdchar)]jump pub_do_jump
+bind pub n [string trim $cc(cmdchar)]save pub_do_save
+bind pub n [string trim $cc(cmdchar)]global pub:global
+bind pub n [string trim $cc(cmdchar)]part part:pub
+bind pub n [string trim $cc(cmdchar)]join:pub
+bind pub n|m [string trim $cc(cmdchar)]hop hop:pub
+bind pub n|m [string trim $cc(cmdchar)]cycle hop:pub
+bind pub n [string trim $cc(cmdchar)]botnick botnick:pub
+bind pub n|- [string trim $cc(cmdchar)]uptime uptime:pub
+bind pub n|m [string trim $cc(cmdchar)]adduser adduser:pub
+bind pub n|m [string trim $cc(cmdchar)]deluser deluser:pub
+
+#Flag fn (dcc enabled)
 bind dcc fn|fn chancontrol pub_chancontrol
 bind dcc fn|fn keepalive dobinddcckeepalive
 bind dcc fn|fn undokeepalive undobinddcckeepalive
 
+#Flag - (everyone with a handle)
+bind pub - [string trim $cc(cmdchar)]bot pub_do_bot
+bind pub - [string trim $cc(cmdchar)]info pub_info
+bind pub - [string trim $cc(cmdchar)]whois pub_whois
+bind pub - [string trim $cc(cmdchar)]ops pub:alert
+
+#Flag * (Everyone)
+bind pub * [string trim $cc(cmdchar)]version pub_version
+bind msg * help help:pub
+
+proc help:pub {nick host hand text} {
+	global cc
+	global botnick
+	set htext [lindex $text 0]
+	if {$htext == "op"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]op\002 \[nick\]\002"
+		puthelp "NOTICE $nick :Gives ops to someone in your channel. If no nick is specified, and you are not opped on the channel, it will op you."
+	} elseif {$htext eq "deop"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]deop\002 \[nick\]\002"
+		puthelp "NOTICE $nick :Removes ops from someone in your channel. If no nick is specified, and you are opped on the channel, it will deop you."
+	} elseif {$htext eq "voice"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]voice\002 \[nick\]\002"
+		puthelp "NOTICE $nick :Gives voice to someone in your channel. If no nick is specified, and you are not voiced on the channel, it will voice you."
+	} elseif {$htext eq "devoice"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]devoice\002 \[nick\]\002"
+		puthelp "NOTICE $nick :Removes voice from someone in your channel. If no nick is specified, and you are not devoiced on the channel, it will devoice you."
+	} elseif {$htext eq "invite"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]invite\002 <nick>\002"
+		puthelp "NOTICE $nick :Makes me invite someone on the channel. Also see INVITEME"
+	} elseif {$htext eq "inviteme"} {
+		puthelp "NOTICE $nick :Try: /msg $botnick inviteme #chan"
+		puthelp "NOTICE $nick :Makes me invite you on the specified channel."
+	} elseif {$htext eq "kick"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]kick\002 <nick> \[reason\]\002"
+		puthelp "NOTICE $nick :Makes me kick someone from your channel."
+	} elseif {$htext eq "ban"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]ban\002 <nick> \[reason\]\002"
+		puthelp "NOTICE $nick :Makes me ban and kick someone from your channel."
+	} elseif {$htext eq "unban"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]unban\002 <*!*@host.name.to.unban>\002"
+		puthelp "NOTICE $nick :Makes me remove a ban from your channel."
+	} elseif {$htext eq "topic"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]topic\002 <newtopic>\002"
+		puthelp "NOTICE $nick :Makes me change the topic on your channel."
+	} elseif {$htext eq "blacklist"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]blacklist\002 <nick> \[reason\]\002"
+		puthelp "NOTICE $nick :This will add the specified user to the bot's blacklist. Forever."
+	} elseif {$htext eq "whitelist"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]whitelist\002 <*!*@host.to.remove.from.blacklist>\002"
+		puthelp "NOTICE $nick :This will remove the specified host from the channel's blasklist."
+	} elseif {$htext eq "chattr"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]chattr\002 <nick> <+|-flags>\002"
+		puthelp "NOTICE $nick :This will manipulate the user's flags on the channel. See partyline for global flags."
+	} elseif {$htext eq "botnick"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]botnick <newnick>"
+		puthelp "NOTICE $nick :This will force the bot to try a different nickname."
+	} elseif {$htext eq "hop"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]hop"
+		puthelp "NOTICE $nick :This will make me cycle the channel"
+	} elseif {$htext eq "cycle"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]cycle"
+		puthelp "NOTICE $nick :This will make me cycle the channel"
+	} elseif {$htext eq "join"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]join <#chan>"
+		puthelp "NOTICE $nick :This will make me join the specified channel"
+	} elseif {$htext eq "part"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]part <#chan>"
+		puthelp "NOTICE $nick :This will make me leave the specified channel"
+	} elseif {$htext eq "save"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]save"
+		puthelp "NOTICE $nick :This will make me save the userlist and channel settings right now."
+	} elseif {$htext eq "jump"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]jump <server.name>"
+		puthelp "NOTICE $nick :This makes me jump on another server. Note this could make me jump on another network."
+	} elseif {$htext eq "rehash"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]rehash"
+		puthelp "NOTICE $nick :Rehash and reload all scripts and variables."
+	} elseif {$htext eq "restart"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]restart"
+		puthelp "NOTICE $nick :Restart the bot completely. (Will /part all channels first)"
+	} elseif {$htext eq "away"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]away <message>"
+		puthelp "NOTICE $nick :Set the bot's away message"
+	} elseif {$htext eq "back"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]back"
+		puthelp "NOTICE $nick :Remove the bot's away message"
+	} elseif {$htext eq "global"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]global <message>"
+		puthelp "NOTICE $nick :Sends a message to all channels i am in."
+	} elseif {$htext eq "whois"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]whois <nick>"
+		puthelp "NOTICE $nick :See someone's flags and status on the channel."
+	} elseif {$htext eq "version"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]version"
+		puthelp "NOTICE $nick :See the current version of the chancontrol.tcl and get a link for the latest release. (Via /notice)"
+	} elseif {$htext eq "info"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]info <infoline|none>"
+		puthelp "NOTICE $nick :Set your infoline on the bot, set to \002none\002 to remove it"
+	} elseif {$htext eq "adduser"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]adduser <handle> \[*!*@host.name.here\]"
+		puthelp "NOTICE $nick :add a user to the bot, handle should be 9chr long, and if no host is specified, i will set a weird one for you."
+	} elseif {$htext eq "deluser"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]deluser <handle>"
+		puthelp "NOTICE $nick :Removes a user from the bot's database"
+	} elseif {$htext eq "allcommands"} { 
+		putquick "NOTICE $nick :\002Flag v\002 voice devoice"
+		putquick "NOTICE $nick :\002Flag o\002 op deop voice devoice kick ban unban topic"
+		putquick "NOTICE $nick :\002Flag m\002 blacklist whitelist adduser  deluser chattr"
+		putquick "NOTICE $nick :\002Flag n\002 botnick hop cycle join part save jump rehash restart away back global"
+		putquick "NOTICE $nick :\002Flag *\002 whois version info"
+	} else {
+		putquick "NOTICE $nick :SYNTAX: HELP \[command\]"
+		putquick "NOTICE $nick :EXAMPLE /msg $botnick help allcommands"
+  }
+}
+
 proc pub_do_bot {nick host hand channel text} {
 	puthelp "NOTICE $nick :The trigger for commands is [string trim $cc(cmdchar)] so [string trim $cc(cmdchar)]op [string trim $cc(cmdchar)]voice [string trim $cc(cmdchar)]kick..."
 	puthelp "NOTICE $nick :The main support channel for the bot is [string trim $cc(backchan)]"
-        puthelp "NOTICE $nick :If you need help with a command, visit: https://github.com/SebLemery/chancontrol.tcl for a detailled list"
-	puthelp "NOTICE $nick :This bot runs chancontrol.tcl 4.5, if it's not the latest, tell the bot owner"
+        puthelp "NOTICE $nick :See:\002 /msg $botnick help allcommands\002 for help"
         return
 }
 proc dobinddcckeepalive {handle idx text} {
@@ -299,11 +433,11 @@ proc pub_do_perm {nick host handle channel testes} {
 proc ban:pub {nick uhost hand chan arg} {
 	set ban [lindex $arg 0]
 	if {$ban eq ""} {
-		putserv "NOTICE $nick :Usage: .ban <nick/host>"
+		putserv "NOTICE $nick :Try: .ban <nick/host>"
 		set ban [maskhost [getchanhost $chan]]
 		return 1
 	}
-	if {[string match *!*@* $ban]} {pushmode $chan +b $ban} {pushmode $chan +b *!*@[lindex [split [getchanhost $ban] @] 1]}
+	if {[string match *!*@* $ban]} {pushmode $chan +b $ban} {pushmode $chan +b *!*@[lindex [split [getchanhost $ban] @] 1];pub_do_kick $nick $uhost $hand $chan $arg}
 }
 
 #end
@@ -530,7 +664,20 @@ proc botnick:pub { mynick uhost hand chan text  } {
 }
 # end botnick
 
-#end
+
+
+set replyctcp "[string trim $cc(version)] Get it from: https://github.com/SebLemery/chancontrol.tcl"
+bind ctcp - "VERSION" ctcp:reply
+bind ctcp - "PING" ctcp:reply
+bind ctcp - "TIME" ctcp:reply
+bind ctcp - "FINGER" ctcp:reply
+proc ctcp:reply {nick host hand dest key text} {
+	global cc 
+	global replyctcp
+	putserv "NOTICE $nick :$replyctcp"
+	return 0 
+}
+
 #uptime
 
 proc uptime:pub {nick host handle chan arg} {
@@ -605,38 +752,41 @@ proc deluser:pub {nick uhost handle chan arg} {
 }
 
 #access
-proc pub_access {nick uhost handle chan text} {
+
+proc auth:check {hand} {
+	set auth [getuser $hand XTRA "AUTH"]
+	if {($auth == "") || ($auth == "0") || ($auth == "DEAD")} {
+		return 0
+	} else {
+		return 1
+	}
+}
+
+#user: $target_user, flags: [chattr $target_user $chan], Status: $mazafaka. Hostmasks: $u_hosts
+proc pub_whois {nick uhost handle chan text} {
 	global cc
 	set u_nick [lindex [split $text] 0]
+	set u_hosts [getchanhost $nick $chan]
 	set u_hand [nick2hand $u_nick $chan]
 	set g_flags [chattr $u_hand]
 	set c_flags [lindex [split [chattr $u_hand $chan] | ] 1]
-	if {![validuser $u_hand]} {
-		puthelp "privmsg $chan :$u_hand does not exist in my database. Use [string trim $cc(cmdchar)]adduser <handle> <*!*@host.name>"
+	set target_user [finduser $u_hosts]
+	if {[validuser $u_hand]} {
+		puthelp "privmsg $chan :$u_hand is: \[global|local flags: [chattr $u_nick $chan] \] Hostnames: [getuser $u_hand hosts]"
 		return
-	}
-	if {[matchattr $u_hand |n $chan]} {
-		puthelp "privmsg $chan :$u_hand is a \00314\[\0034Bot owner\00314\]\0035 +n\003 \[Global flags: $g_flags Channel flags: $c_flags\]"
-		return
-	}
-	if {[matchattr $u_hand |m $chan]} {
-		puthelp "privmsg $chan :$u_hand is a \00314\[\0034Channel manager\00314\]\0035 +m\003  \[Global flags: $g_flags Channel flags: $c_flags\]"
-		return
-	}
-	if {[matchattr $u_hand |o $chan]} {
-		puthelp "privmsg $chan :$u_hand is a \00314\[\0034Channel operator\00314\]\0035 +o\003 \[Global flags: $g_flags Channel flags: $c_flags\]"
-		return
-	}
-	if {[matchattr $u_hand |f $chan] } {
-		puthelp "privmsg $chan :$u_hand is a \00314\[\0034Friendly user\00314\]\0035 +f\003 \[Global flags: $g_flags Channel flags: $c_flags\]"
-		return
-	}
-	puthelp "privmsg $chan :$u_hand has no access to the bot in this channel yet, To add him, use [string trim $cc(cmdchar)]chattr $u_hand +flags"
+	} 
+	puthelp "privmsg $chan :$u_hand has no access to the bot in this channel yet. To add him, use [string trim $cc(cmdchar)]chattr $u_hand +flags"
 }
 #version return
 proc pub_version {nick uhost handle chan arg} {
 	global cc
 	puthelp "NOTICE $nick :Version: $cc(version) available at: https://github.com/SebLemery/chancontrol.tcl"
+}
+
+#alert notifier
+proc pub:alert {nick uhost handle chan arg} {
+	global cc
+	puthelp "NOTICE $cc(backchan) :[string trim $cc(cmdchar)]ops in $chan from $nick about: $arg"
 }
 
 #info

@@ -1,4 +1,4 @@
-# chancontrol.tcl
+f# chancontrol.tcl
 # Script available at: https://github.com/SebLemery/chancontrol.tcl
 # TinyURL: http://tinyurl.com/chancontrol
 # Dropbox link: https://db.tt/tMADHne2/
@@ -19,7 +19,7 @@
 set cc(cmdchar) "."
 
 # This is your channel, the public one, where everyone goes to.
-set cc(mainchan) "#mainchan"
+set cc(mainchan) "#chancontrol"
 
 # Set the back channel, this channel will have modes +s set automatically
 # Unless you change it in the next setting. 
@@ -27,7 +27,7 @@ set cc(mainchan) "#mainchan"
 # When bans, kicks and other channel manipulation is done, it will 
 # be sent in this channel. 
 # Note: The command INVITEME will invite you in this channel. useful if +i
-set cc(backchan) "#backchan"
+set cc(backchan) "#beep"
 
 # This is the mode that will be set by the bot in your backchannel
 # from the setting above. Usually, +i, +s or +p is ok. 
@@ -74,9 +74,8 @@ bind pub n [string trim $cc(cmdchar)]jump pub_do_jump
 bind pub n [string trim $cc(cmdchar)]save pub_do_save
 bind pub n [string trim $cc(cmdchar)]global pub:global
 bind pub n [string trim $cc(cmdchar)]part part:pub
+bind pub n [string trim $cc(cmdchar)]comeback comeback:pub
 bind pub n [string trim $cc(cmdchar)]join:pub
-bind pub n|m [string trim $cc(cmdchar)]hop hop:pub
-bind pub n|m [string trim $cc(cmdchar)]cycle hop:pub
 bind pub n [string trim $cc(cmdchar)]botnick botnick:pub
 bind pub n|- [string trim $cc(cmdchar)]uptime uptime:pub
 bind pub n|m [string trim $cc(cmdchar)]adduser adduser:pub
@@ -143,8 +142,8 @@ proc help:pub {nick host hand text} {
 	} elseif {$htext eq "botnick"} {
 		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]botnick <newnick>"
 		puthelp "NOTICE $nick :This will force the bot to try a different nickname."
-	} elseif {$htext eq "hop"} {
-		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]hop"
+	} elseif {$htext eq "comeback"} {
+		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]comeback"
 		puthelp "NOTICE $nick :This will make me cycle the channel"
 	} elseif {$htext eq "cycle"} {
 		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]cycle"
@@ -191,15 +190,15 @@ proc help:pub {nick host hand text} {
 	} elseif {$htext eq "deluser"} {
 		puthelp "NOTICE $nick :Try: \002[string trim $cc(cmdchar)]deluser <handle>"
 		puthelp "NOTICE $nick :Removes a user from the bot's database"
-	} elseif {$htext eq "allcommands"} { 
+	} elseif {$htext eq "showcommands"} { 
 		putquick "NOTICE $nick :\002Flag v\002 voice devoice"
 		putquick "NOTICE $nick :\002Flag o\002 op deop voice devoice kick ban unban topic"
 		putquick "NOTICE $nick :\002Flag m\002 blacklist whitelist adduser  deluser chattr"
-		putquick "NOTICE $nick :\002Flag n\002 botnick hop cycle join part save jump rehash restart away back global"
+		putquick "NOTICE $nick :\002Flag n\002 botnick comeback cycle join part save jump rehash restart away back global"
 		putquick "NOTICE $nick :\002Flag *\002 whois version info"
 	} else {
 		putquick "NOTICE $nick :SYNTAX: HELP \[command\]"
-		putquick "NOTICE $nick :EXAMPLE /msg $botnick help allcommands"
+		putquick "NOTICE $nick :EXAMPLE /msg $botnick help showcommands"
   }
 }
 
@@ -437,7 +436,7 @@ proc ban:pub {nick uhost hand chan arg} {
 		set ban [maskhost [getchanhost $chan]]
 		return 1
 	}
-	if {[string match *!*@* $ban]} {pushmode $chan +b $ban} {pushmode $chan +b *!*@[lindex [split [getchanhost $ban] @] 1];pub_do_kick $nick $uhost $hand $chan $arg}
+	if {[string match *!*@* $ban]} {pushmode $chan +b $ban} {pushmode $chan +b *!*@[lindex [split [getchanhost $ban] @] 2];pub_do_kick $nick $uhost $hand $chan $arg}
 }
 
 #end
@@ -604,25 +603,17 @@ set kickondeop 1
 #Don't Edit anything below!
 bind mode - * hop:mode
 
-proc hop:pub { nick uhost hand chan text } {
-	putlog "Hopping channel $chan at $nick's Request"
-	putserv "PART :$chan :cycle"
-	putserv "JOIN :$chan"
-}
-
-proc hop:msg { nick uhost hand text } {
-	putlog "Hopping channel $text at $nick's Request"
-	putserv "PART :$text :brb"
-	putserv "JOIN :$text"
+proc comeback:pub { nick uhost hand chan text } {
+	putserv "PART $chan :coming right back"
+	putserv "JOIN $chan"
 }
 
 proc hop:mode { nick uhost hand chan mc vict } {
 	global hopondeop kickondeop botnick owner
 	if {$mc eq "-o" && $vict eq $botnick && $hopondeop eq 1} {
 		putlog "Hopping channel $chan due to deop"
-		putserv "PART :$chan :Trying to fix something"
-		putserv "JOIN :$chan"
-		putserv "PRIVMSG $chan :"
+		putserv "PART $chan :Trying to fix something"
+		putserv "JOIN $chan"
 		if {$nick != $owner && $kickondeop eq 1} {
 			putserv "KICK $chan $nick"
 		}

@@ -19,7 +19,7 @@ f# chancontrol.tcl
 set cc(cmdchar) "."
 
 # This is your channel, the public one, where everyone goes to.
-set cc(mainchan) "#chancontrol"
+set cc(mainchan) "#mainchan"
 
 # Set the back channel, this channel will have modes +s set automatically
 # Unless you change it in the next setting. 
@@ -27,7 +27,7 @@ set cc(mainchan) "#chancontrol"
 # When bans, kicks and other channel manipulation is done, it will 
 # be sent in this channel. 
 # Note: The command INVITEME will invite you in this channel. useful if +i
-set cc(backchan) "#beep"
+set cc(backchan) "#backchan"
 
 # This is the mode that will be set by the bot in your backchannel
 # from the setting above. Usually, +i, +s or +p is ok. 
@@ -39,7 +39,7 @@ set cc(backmode) "+s"
 
 # Script version. Useful to keep track of the latest devlopement of this script.
 # Don't change it unless you hate puppies. Honestly, just leave it intact.
-set cc(version_number) "4.6"
+set cc(version_number) "4.6.2"
 set cc(version) "\002\[chancontrol.tcl $cc(version_number)\]\002"
 
 ##Binds (n is bot owner, and should have access to everything)
